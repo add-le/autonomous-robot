@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+<meta charset="utf-8">
+<title>Robot L3</title>
+
+<script type="text/javascript" src="./js/jquery/jquery-3.2.1.min.js" ></script>
+
+<link rel="stylesheet" href="./js/jquery/jquery-ui-1.12.1.min.css" />           
+<script type="text/javascript" src="./js/jquery/jquery-ui-1.12.1.min.js" ></script>
+<script type="text/javascript" src="./js/jquery/jquery.cookie.js" ></script>
+
+
+
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+	//alert("eee")
+
+	lire_stat()
+	
+
+
+});
+
+function cmd(c) {
+	$.ajax({
+		method : "get",
+		url : "../cmd",
+		data : {
+			val : c,
+		},
+		dataType : 'json',
+		success : function(data) {
+			
+		}
+	})
+}
+
+function lire_stat() {
+	$.ajax({
+		method : "get",
+		url : "../lire_stat",
+		dataType : 'json',
+		success : function(data) {
+			//console.log(JSON.stringify(data))
+			if (typeof data.dist_mm !== "undefined") {
+				$("#dist_mm").html(data.dist_mm)
+			}
+			if (typeof data.dist_rate !== "undefined") {
+				$("#dist_rate").html(data.dist_rate)
+			}
+			if (typeof data.dist_status !== "undefined") {
+				$("#dist_status").html(data.dist_status)
+			}
+		}
+	})
+
+	setTimeout(() => {
+    	lire_stat()
+	}, 500);
+
+}
+
+</script>
+
+
+</head>
+
+<body>
+
+
+	<table>
+		<tr><td>Dist (mm) : </td><td id="dist_mm"></td></tr>
+		<tr><td>Dist (rate) : </td><td id="dist_rate"></td></tr>
+		<tr><td>Dist (stat) : </td><td id="dist_status"></td></tr>
+	</table>
+	<br><br>
+	<input type="submit" value="Servo gauche" onclick="cmd('servo_gauche')" >
+	<input type="submit" value="Servo avant" onclick="cmd('servo_avant')" >
+	<input type="submit" value="Servo droite" onclick="cmd('servo_droite')" >
+	<br><br>
+	<input type="submit" value="Stop" onclick="cmd('stop')" >
+	<br><br>
+	<input type="submit" value="Avancer 1" onclick="cmd('avancer_1')" >
+	<input type="submit" value="Avancer 9" onclick="cmd('avancer_9')" >
+	<br><br>
+	<input type="submit" value="Avancer 3 secondes" onclick="cmd('avancer_3_secondes')" ><br><br>
+	
+	<input type="submit" value="Mission 1" onclick="cmd('mission_1')" ><br><br>
+	<input type="submit" value="Mission 2" onclick="cmd('mission_2')" ><br><br>
+	<input type="submit" value="Mission 3" onclick="cmd('mission_3')" ><br><br>
+	<input type="submit" value="Mission 4" onclick="cmd('mission_4')" ><br><br>
+	<input type="submit" value="Mission 5" onclick="cmd('mission_5')" ><br><br>
+	<input type="submit" value="Mission 6" onclick="cmd('mission_6')" ><br><br>
+
+
+
+</body>
+</html>
+
